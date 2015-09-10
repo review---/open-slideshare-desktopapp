@@ -11,6 +11,19 @@ module.exports = function(grunt){
             mac: {
                 command: 'hdiutil create -ov -srcfolder ./OpenSlideshare-darwin-x64 -fs HFS+ -format UDZO -imagekey zlib-level=9 -volname "OpenSlideshare" OpenSlideshare.dmg'
             }
+        },
+        'http-server': {
+            'dev': {
+                root: "./",
+                port: 8282,
+                host: "127.0.0.1",
+                cache: 1,
+                showDir : true,
+                autoIndex: true,
+                ext: "html",
+                runInBackground: false,
+                logFn: function(req, res, error) { },
+            }
         }
     });
 
@@ -19,5 +32,6 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-http-server');
     grunt.registerTask('default', ['watch']);
 };

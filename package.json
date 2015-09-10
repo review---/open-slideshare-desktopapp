@@ -17,6 +17,7 @@
      "grunt-contrib-clean": "~0.6.0",
      "grunt-contrib-connect": "*",
      "grunt-shell":"*",
+     "grunt-http-server":"*",
      "livereloadx":"*"
   }
 }
