@@ -36,9 +36,10 @@ div#right_area {
 iframe#slide_frame {
     width:100%;
     border:0px;
-    margin-top:0px;
-    margin-right:0px;
+    margin:0px;
+    margin-bottom:-20px;
     padding:0px;
+    vertical-align:bottom;
 }
 
 div#description {

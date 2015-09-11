@@ -1,5 +1,5 @@
     <h3 ng-bind="slide_data.slide.Slide.name"></h3>
-    <iframe iframe-set-dimensions-onload src="{{src}}" id="slide_frame"></iframe>
+    <iframe iframe-set-dimensions-onload src="{{src}}" id="slide_frame" ng-style="iframe_style"></iframe>
     <span ng-bind-template="Created by {{slide_data.slide.Slide.user_name}} Published {{slide_data.slide.Slide.created}} in {{slide_data.slide.Slide.category_name}}"></span>
     <div id="description" ng-bind="slide_data.slide.Slide.description"></div>
     <span ng-bind-template="Tags: {{slide_data.slide.Slide.tags}}"></span>

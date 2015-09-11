@@ -29,10 +29,11 @@ var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
       restrict: 'A',
       link: function(scope, element, attrs){
         element.on('load', function(){
+          element.css('height', 0);
           var iFrameHeight = element[0].contentWindow.document.body.scrollHeight + 'px';
           var iFrameWidth = '100%';
+          console.log("[Info] iFrameHeight:" + String(iFrameHeight));
           element.css('width', iFrameWidth);
-          element.css('height', 0);
           element.css('height', iFrameHeight);
         })
       }
@@ -56,7 +57,7 @@ angular.module('myServices', [])
         });
     };
     this.get_slide = function (id, callback) {
-        console.log(id);
+        console.log("[Info] Slide ID is " + String(id));
         $http({
             url: slide_url + "/" + String(id),
             method: 'GET'
@@ -65,7 +66,7 @@ angular.module('myServices', [])
             callback(data);
         })
         .error(function (data, status, headers, config) {
-            console.log(slide_url + "/" + String(id));
+            console.log("[Info] Slide URL is " + slide_url + "/" + String(id));
             alert(status + ' ' + data.message);
         });
     };
@@ -74,21 +75,20 @@ angular.module('myServices', [])
 angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
     .controller('SlidesController',
         ['$scope', 'oss', '$sce', function($scope, oss, $sce) {
-            $scope.hoge = "doing...";
             oss.get_slides(function (res) {
                 $scope.slides = res;
             });
             $scope.displaySlide = function(id, $event) {
-                console.log(id);
+                console.log("[Info] Slide ID is " + String(id));
                 var u = iframe_url + "/" + String(id);
                 $scope.src = u;
-                console.log($scope.src);
+                console.log("[Info] Slide Frame is " + $scope.src);
                 $scope.src = $sce.trustAsResourceUrl($scope.src);
                 oss.get_slide(id, function (res) {
+                    console.log("[Success] GetSlide...");
                     $scope.slide_data = res;
-                    console.log($scope.slide_data);
+                    $scope.slide_body = "./templates/slide_body.html";
                 });
-                $scope.slide_body = "./templates/slide_body.html";
             };
         }]
     );
