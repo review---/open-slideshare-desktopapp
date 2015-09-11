@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="OSS">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OpenSlideshare</title>
+  <script src="./assets/js/jquery-1.10.2.min.js"></script>
+  <script type="application/javascript">
+    if (typeof module === 'object' && typeof module.exports !== 'undefined') {
+        window.$ = window.jQuery = window.$1102 = module.exports;
+    }
+  </script>
+  <script src="./assets/js/jquery-ui.js"></script>
+  <script src="./assets/js/jquery.lazyload.js"></script>
+  <script src="./assets/js/jquery.bxslider.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <script src="./assets/js/angular.min.js"></script>
+  <script src="./assets/js/angular-sanitize.min.js"></script>
+  <script src="./app/SlidesController.js"></script>
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/app.css">
 </head>
-<body>
-  <webview id="mainWebview" src="http://slide.meguro.ryuzee.com/" autosize="on"></webview>
-  <style>
-  webview {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-  </style>
-  <script src="./openslideshare.js"></script>
+<body ng-controller="SlidesController">
+<div class="container">
+<div class="row">
+  <div class="col-sm-4" id="left_navi">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="slide in slides.slides"><a ng-click="displaySlide(slide.Slide.id)">{{slide.Slide.name}}</a></li>
+    </ul>
+  </div>
+  <div class="col-sm-8" id="right_area">
+    <h4>{{slide_data.slide.Slide.name}}</h4>
+    <iframe iframe-set-dimensions-onload src="{{src}}" id="slide_frame"></iframe>
+    Created by {{slide_data.slide.Slide.user_name}} Published in {{slide_data.slide.Slide.category_name}}
+    <div id="description">{{slide_data.slide.Slide.description}}</div>
+Tags: {{slide_data.slide.Slide.tags}}
+  </div>
+</div>
 </body>
 </html>
