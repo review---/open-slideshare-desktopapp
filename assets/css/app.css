@@ -23,13 +23,25 @@ div#left_navi {
     margin:0px;
     padding:0px;
     font-size:0.8em;
+    background-color: #333;
+}
+
+div#left_navi ul li {
+    background-color: #333;
+    color: #ddd;
+    border: 1px solid #222;
+}
+
+div#left_navi ul li a {
+    background-color: #333;
+    color: #ddd;
 }
 
 div#right_area {
     margin:0px;
     padding:8px;
     height:100%;
-    background-color:#fff;
+    /** background-color:#fff; **/
     color:#333;
 }
 
