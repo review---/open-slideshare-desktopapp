@@ -88,6 +88,7 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
                     $scope.slide_data = res;
                     console.log($scope.slide_data);
                 });
+                $scope.slide_body = "./templates/slide_body.html";
             };
         }]
     );

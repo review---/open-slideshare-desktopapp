@@ -24,17 +24,13 @@
 <body ng-controller="SlidesController">
 <div class="container">
 <div class="row">
-  <div class="col-sm-4" id="left_navi">
+  <div class="col-sm-3" id="left_navi">
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="slide in slides.slides"><a ng-click="displaySlide(slide.Slide.id)">{{slide.Slide.name}}</a></li>
+        <li class="list-group-item" ng-repeat="slide in slides.slides"><a ng-click="displaySlide(slide.Slide.id)"><span ng-bind="slide.Slide.name"></span></a></li>
     </ul>
   </div>
-  <div class="col-sm-8" id="right_area">
-    <h4>{{slide_data.slide.Slide.name}}</h4>
-    <iframe iframe-set-dimensions-onload src="{{src}}" id="slide_frame"></iframe>
-    Created by {{slide_data.slide.Slide.user_name}} Published in {{slide_data.slide.Slide.category_name}}
-    <div id="description">{{slide_data.slide.Slide.description}}</div>
-Tags: {{slide_data.slide.Slide.tags}}
+  <div class="col-sm-9" id="right_area">
+    <ng-include src="slide_body"></ng-include>
   </div>
 </div>
 </body>
