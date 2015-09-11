@@ -29,6 +29,8 @@ div#right_area {
     margin:0px;
     padding:8px;
     height:100%;
+    background-color:#fff;
+    color:#333;
 }
 
 iframe#slide_frame {
