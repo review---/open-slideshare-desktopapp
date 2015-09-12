@@ -3,7 +3,9 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
 var Menu = require('menu');
+var Tray = require('tray');
 var shell = require('shell');
+// var remote = require('remote');
 
 require('crash-reporter').start();
 
@@ -15,7 +17,23 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
+  /** Application Menu **/
   Menu.setApplicationMenu(menu);
+
+  /** Tray Icon **/
+  var appIcon = new Tray(__dirname + '/assets/favicon/favicon-16x16.png');
+  /** Add context menu **/
+  var contextMenu = Menu.buildFromTemplate([
+    {label: 'Open Web Site', accelerator: 'Command+O', click: function() {
+      shell.openExternal('http://slide.meguro.ryuzee.com');
+    }},
+    {type: 'separator'},
+    {label: 'Quit', accelerator: 'Command+Q', click: function() { app.quit(); }}
+  ]);
+  appIcon.setContextMenu(contextMenu);
+  // Show tip when mouseover
+  appIcon.setToolTip('OpenSlideshare / No Sushi, No Life');
+
   openWindow();
 });
 
@@ -45,5 +63,6 @@ var template = [
   }
 ];
 var menu = Menu.buildFromTemplate(template);
+
 
 // vim: ts=2 sts=2 sw=2 expandtab
