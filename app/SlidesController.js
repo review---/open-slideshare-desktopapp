@@ -71,6 +71,19 @@ angular.module('myServices', [])
                 alert(status + ' ' + data.message);
             });
         };
+        this.get_transcript = function (id, callback) {
+            console.log("[Info] Slide ID is " + String(id));
+            $http({
+                url: slide_url + "/" + String(id) + "/transcript",
+                method: 'GET'
+            })
+            .success(function (data, status, headers, config) {
+                callback(data);
+            })
+            .error(function (data, status, headers, config) {
+                alert(status + ' ' + data.message);
+            });
+        };
     }]);
 
 /** Main **/
@@ -86,10 +99,20 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
                 $scope.src = u;
                 console.log("[Info] Slide Frame is " + $scope.src);
                 $scope.src = $sce.trustAsResourceUrl($scope.src);
+                $scope.slide_transcript_data = null;
+
+                /** Retrieve slide data **/
                 oss.get_slide(id, function (res) {
-                    console.log("[Success] GetSlide...");
+                    console.log("[Success] Get slide...");
                     $scope.slide_data = res;
                     $scope.slide_body = "./templates/slide_body.html";
+                });
+
+                /** Retrieve transcript data **/
+                oss.get_transcript(id, function (res) {
+                    console.log("[Success] Get transcript...");
+                    $scope.slide_transcript_data = res;
+                    $scope.slide_transcript = "./templates/slide_transcript.html";
                 });
             };
         }]

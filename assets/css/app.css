@@ -43,6 +43,8 @@ div#right_area {
     height:100%;
     /** background-color:#fff; **/
     color:#333;
+    min-height:100%;
+    overflow:scroll;
 }
 
 iframe#slide_frame {
@@ -61,4 +63,8 @@ div#description {
     margin-top:0.8em;
     color: #333;
     margin-bottom:0.8em;
+}
+
+ul.transcript {
+    padding:20px;
 }
