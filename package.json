@@ -18,6 +18,7 @@
      "grunt-contrib-connect": "*",
      "grunt-shell":"*",
      "grunt-http-server":"*",
-     "livereloadx":"*"
+     "livereloadx":"*",
+     "log4js":"*"
   }
 }
