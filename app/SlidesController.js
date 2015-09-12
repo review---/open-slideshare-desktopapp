@@ -31,15 +31,16 @@ var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
             restrict: 'A',
             link: function(scope, element, attrs){
                 element.on('load', function(){
-                element.css('height', 0);
-                var iFrameHeight = element[0].contentWindow.document.body.scrollHeight + 'px';
-                var iFrameWidth = '100%';
-                console.log("[Info] iFrameHeight:" + String(iFrameHeight));
-                element.css('width', iFrameWidth);
-                element.css('height', iFrameHeight);
-            })
+                    element.css('height', 0);
+                    var iFrameWidth = '100%';
+                    var iFrameHeight = element[0].contentWindow.document.body.scrollHeight + 'px';
+                    console.log("[Info] iFrameHeight:" + String(iFrameHeight));
+                    element.css('width', iFrameWidth);
+                    element.css('height', iFrameHeight);
+                })
+            }
         }
-    }}]);
+    }]);
 }(angular));
 
 /** Service Layer **/
@@ -89,11 +90,17 @@ angular.module('myServices', [])
 /** Main **/
 angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
     .controller('SlidesController',
-        ['$scope', 'oss', '$sce', function($scope, oss, $sce) {
+        ['$scope', 'oss', '$sce', '$timeout', function($scope, oss, $sce, $timeout) {
             oss.get_slides(function (res) {
                 $scope.slides = res;
             });
             $scope.displaySlide = function(id, $event) {
+                /** Display main tab **/
+                $timeout(function() {
+                    angular.element('#main_menu').trigger('click');
+                }, 1);
+
+                /** Specify frame url **/
                 console.log("[Info] Slide ID is " + String(id));
                 var u = iframe_url + "/" + String(id);
                 $scope.src = u;
