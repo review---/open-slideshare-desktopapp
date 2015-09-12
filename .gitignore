@@ -1,3 +1,4 @@
 .DS_Store
 request.log
 node_modules
+logs

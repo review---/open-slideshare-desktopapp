@@ -5,7 +5,7 @@ var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 var Tray = require('tray');
 var shell = require('shell');
-// var remote = require('remote');
+var mkdirp = require('mkdirp');
 
 require('crash-reporter').start();
 
@@ -17,6 +17,14 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
+
+  /** Create Log Directory **/
+  mkdirp(__dirname + '/logs', function (err) {
+    if (err) {
+     console.error(err)
+    }
+  });
+
   /** Application Menu **/
   Menu.setApplicationMenu(menu);
 

@@ -5,7 +5,7 @@ log4js.configure({
     {
       "type": "file",
       "category": "request",
-      "filename": "request.log",
+      "filename": "./logs/request.log",
       "pattern": "-yyyy-MM-dd"
     }
   ]

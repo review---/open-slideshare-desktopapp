@@ -19,6 +19,7 @@
      "grunt-shell":"*",
      "grunt-http-server":"*",
      "livereloadx":"*",
-     "log4js":"*"
+     "log4js":"*",
+     "mkdirp":"*"
   }
 }
