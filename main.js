@@ -2,6 +2,8 @@
 
 var app = require('app');
 var BrowserWindow = require('browser-window');
+var Menu = require('menu');
+var shell = require('shell');
 
 require('crash-reporter').start();
 
@@ -13,12 +15,34 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
-
-  // ブラウザ(Chromium)の起動, 初期画面のロード
-  mainWindow = new BrowserWindow({width: 800, height: 600 * 1.2});
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
-
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
+  Menu.setApplicationMenu(menu);
+  openWindow();
 });
+
+function openWindow() {
+  // ブラウザ(Chromium)の起動, 初期画面のロード
+  var win = new BrowserWindow({width: 800, height: 600 * 1.2});
+  win.loadUrl('file://' + __dirname + '/index.html');
+  win.on('closed', function () {
+    win = null;
+  });
+}
+
+// メニュー情報の作成
+var template = [
+  {
+    label: 'OpenSlideshare',
+    submenu: [
+      {label: 'Quit', accelerator: 'Command+Q', click: function () {app.quit();}}
+    ]
+  }, {
+    label: 'File',
+    submenu: [
+      {label: 'Open Web Site', accelerator: 'Command+O', click: function() {
+        shell.openExternal('http://slide.meguro.ryuzee.com');
+      }}
+    ]
+  }
+];
+
+var menu = Menu.buildFromTemplate(template);
