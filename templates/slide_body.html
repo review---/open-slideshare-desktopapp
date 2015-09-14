@@ -2,4 +2,4 @@
     <iframe iframe-set-dimensions-onload src="{{src}}" id="slide_frame" ng-style="iframe_style"></iframe>
     <span ng-bind-template="Created by {{slide_data.slide.Slide.user_name}} Published {{slide_data.slide.Slide.created}} in {{slide_data.slide.Slide.category_name}}"></span>
     <div id="description" ng-bind="slide_data.slide.Slide.description"></div>
-    <div>Tags: <span ng-repeat="t in slide_data.slide.Slide.tags.split(',')">{{t}}</span></div>
+    <div>Tags: <span ng-repeat="t in slide_data.slide.Slide.tags.split(',')"><a ng-click="listSlidesByTag(t.trim())">{{t}}</a></span></div>

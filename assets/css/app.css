@@ -27,15 +27,24 @@ div#left_navi {
     background-color: #333;
 }
 
-div#left_navi ul li {
-    background-color: #333;
-    color: #ddd;
-    border: 1px solid #222;
-}
-
+div#left_navi ul li,
 div#left_navi ul li a {
     background-color: #333;
     color: #ddd;
+}
+
+div#left_navi ul li {
+    border: 1px solid #222;
+}
+
+div#left_navi ul li.list-group-item-info,
+div#left_navi ul li.list-group-item-info a {
+    background-color: #555;
+    color: #ddd;
+}
+
+div#left_navi ul li.list-group-item-info {
+    border: 1px solid #222;
 }
 
 div#right_area {

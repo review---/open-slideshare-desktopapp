@@ -4,6 +4,7 @@ var logger = require('./app/logger');
 var slides_url = "http://slide.meguro.ryuzee.com/api/v1/slides";
 var slide_url = "http://slide.meguro.ryuzee.com/api/v1/slide";
 var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
+var tag_search_url = "http://slide.meguro.ryuzee.com/api/v1/slides/tags:";
 
 (function (ng) {
   'use strict';
@@ -51,6 +52,20 @@ angular.module('myServices', [])
     this.get_slides = function (callback) {
       $http({
         url: slides_url,
+        method: 'GET'
+      })
+      .success(function (data, status, headers, config) {
+        callback(data);
+      })
+      .error(function (data, status, headers, config) {
+        alert(status + ' ' + data.message);
+      });
+    };
+
+    /** Retrieve Slides json by tag **/
+    this.get_slides_by_tag = function (tag, callback) {
+      $http({
+        url: tag_search_url + tag,
         method: 'GET'
       })
       .success(function (data, status, headers, config) {
@@ -110,7 +125,7 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
       logger.request.debug("Slide ID is " + String(id));
       var u = iframe_url + "/" + String(id);
       $scope.src = u;
-      logger.request.debug("[Info] Slide Frame is " + $scope.src);
+      logger.request.debug("Slide Frame is " + $scope.src);
       $scope.src = $sce.trustAsResourceUrl($scope.src);
       $scope.slide_transcript_data = null;
 
@@ -126,6 +141,17 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
         logger.request.debug("Success to get transcript...");
         $scope.slide_transcript_data = res;
         $scope.slide_transcript = "./templates/slide_transcript.html";
+      });
+    };
+    $scope.listSlidesByTag = function(tag, $event) {
+      oss.get_slides_by_tag(tag, function(res) {
+        logger.request.debug(res);
+        $scope.slides = res;
+      });
+    };
+    $scope.listAllSlides = function(tag, $event) {
+      oss.get_slides(function(res) {
+        $scope.slides = res;
       });
     };
   }]

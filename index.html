@@ -31,7 +31,9 @@
 <div class="container">
 <div class="row">
   <div class="col-sm-3" id="left_navi">
+
     <ul class="list-group">
+        <li class="list-group-item list-group-item-info"><a ng-click="listAllSlides()">All Slides</a></li>
         <li class="list-group-item" ng-repeat="slide in slides.slides"><a ng-click="displaySlide(slide.Slide.id)"><span ng-bind="slide.Slide.name"></span></a></li>
     </ul>
   </div>
