@@ -6,6 +6,7 @@ var Menu = require('menu');
 var Tray = require('tray');
 var shell = require('shell');
 var mkdirp = require('mkdirp');
+var storage = require('./app/storage');
 
 require('crash-reporter').start();
 
@@ -21,7 +22,7 @@ app.on('ready', function() {
   /** Create Log Directory **/
   mkdirp(__dirname + '/logs', function (err) {
     if (err) {
-     console.error(err)
+      console.error(err)
     }
   });
 
@@ -43,18 +44,48 @@ app.on('ready', function() {
   appIcon.setToolTip('OpenSlideshare / No Sushi, No Life');
 
   openWindow();
+
 });
 
 function openWindow() {
-  // ブラウザ(Chromium)の起動, 初期画面のロード
-  var win = new BrowserWindow({width: 800, height: 600 * 1.2});
+  var lastWindowState = storage.get("lastWindowState");
+  if (lastWindowState === null) {
+    lastWindowState = {
+      width: 800,
+      height: 720,
+      maximized: false
+    }
+  }
+
+  var win = new BrowserWindow({
+    x: lastWindowState.x,
+    y: lastWindowState.y,
+    width: lastWindowState.width,
+    height: lastWindowState.height});
+
+  if (lastWindowState.maximized) {
+    mainWindow.maximize();
+  }
+
   win.loadUrl('file://' + __dirname + '/index.html');
   win.on('closed', function () {
     win = null;
   });
+
+  win.on('close', function () {
+    var bounds = win.getBounds();
+    storage.set("lastWindowState", {
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+      maximized: win.isMaximized()
+    });
+    console.log("Save configuration completed...");
+  });
 }
 
-// メニュー情報の作成
+/** Create menu **/
 var template = [
   {
     label: 'OpenSlideshare',
