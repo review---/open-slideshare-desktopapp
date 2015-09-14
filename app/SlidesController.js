@@ -76,7 +76,7 @@ angular.module('OSSServices', [])
 
     /** Retrieve Slides json by tag **/
     this.get_slides_by_tag = function (tag, callback) {
-      var u = slides_url + "/tag:" + tag;
+      var u = slides_url + "/tags:" + tag;
       this.get_data(u, callback);
     };
 
