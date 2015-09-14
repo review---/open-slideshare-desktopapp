@@ -47,10 +47,9 @@ var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
 angular.module('myServices', [])
   .service('oss', ['$http', function ($http) {
 
-    /** Retrieve Slides json **/
-    this.get_slides = function (callback) {
+    this.get_data = function(url, callback) {
       $http({
-        url: slides_url,
+        url: url,
         method: 'GET'
       })
       .success(function (data, status, headers, config) {
@@ -59,65 +58,35 @@ angular.module('myServices', [])
       .error(function (data, status, headers, config) {
         alert(status + ' ' + data.message);
       });
+    };
+
+    /** Retrieve Slides json **/
+    this.get_slides = function (callback) {
+      var u = slides_url;
+      this.get_data(u, callback);
     };
 
     /** Retrieve Slides json by tag **/
     this.get_slides_by_tag = function (tag, callback) {
-      $http({
-        url: slides_url + "/tag:" + tag,
-        method: 'GET'
-      })
-      .success(function (data, status, headers, config) {
-        callback(data);
-      })
-      .error(function (data, status, headers, config) {
-        alert(status + ' ' + data.message);
-      });
+      var u = slides_url + "/tag:" + tag;
+      this.get_data(u, callback);
     };
 
     this.get_slides_by_keyword = function (keyword, callback) {
-      $http({
-        url: slides_url + "/name:" + keyword,
-        method: 'GET'
-      })
-      .success(function (data, status, headers, config) {
-        callback(data);
-      })
-      .error(function (data, status, headers, config) {
-        alert(status + ' ' + data.message);
-      });
+      var u = slides_url + "/name:" + keyword;
+      this.get_data(u, callback);
     };
-
 
     /** Retrieve specific slide **/
     this.get_slide = function (id, callback) {
-      logger.request.debug("Slide ID is " + String(id));
-      $http({
-        url: slide_url + "/" + String(id),
-        method: 'GET'
-      })
-      .success(function (data, status, headers, config) {
-        callback(data);
-      })
-      .error(function (data, status, headers, config) {
-        logger.request.error("Slide URL is " + slide_url + "/" + String(id));
-        alert(status + ' ' + data.message);
-      });
+      var u = slide_url + "/" + String(id);
+      this.get_data(u, callback);
     };
 
     /** Retrieve specific transcript **/
     this.get_transcript = function (id, callback) {
-      logger.request.debug("[Info] Slide ID is " + String(id));
-      $http({
-        url: slide_url + "/" + String(id) + "/transcript",
-        method: 'GET'
-      })
-      .success(function (data, status, headers, config) {
-        callback(data);
-      })
-      .error(function (data, status, headers, config) {
-        alert(status + ' ' + data.message);
-      });
+      var u = slide_url + "/" + String(id) + "/transcript";
+      this.get_data(u, callback);
     };
   }]);
 
