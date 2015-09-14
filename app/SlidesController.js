@@ -118,6 +118,8 @@ angular.module('OSS', ['OSSServices', 'ngSanitize', 'ngLoadScript'])
       $scope.slides = res;
     });
     $scope.displaySlide = function(id, $event) {
+      $scope.display_id = id;
+
       /** Display main tab **/
       $timeout(function() {
         angular.element('#main_menu').trigger('click');

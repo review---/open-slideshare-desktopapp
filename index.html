@@ -37,7 +37,9 @@
         <input type="text" name="search_text" class="form-control" ng-model="search_text" ng-change="onSearchTextChange()" />
         </li>
         <li class="list-group-item list-group-item-info"><a ng-click="listAllSlides()">All Slides</a></li>
-        <li click_menu class="list-group-item" ng-repeat="slide in slides.slides"><a ng-click="displaySlide(slide.Slide.id)"><span ng-bind="slide.Slide.name"></span></a></li>
+        <li click_menu class="list-group-item" ng-repeat="slide in slides.slides" ng-class="{list_active: slide.Slide.id === display_id}">
+          <a ng-click="displaySlide(slide.Slide.id)"><span ng-bind="slide.Slide.name"></span></a>
+        </li>
       </ul>
   </div>
   <div class="col-sm-9" id="right_area">
