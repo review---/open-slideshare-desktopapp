@@ -42,6 +42,18 @@ var iframe_url = base_url + "/slides/iframe";
       }
     }
   }]);
+
+  app.directive('clickMenu', [function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+        element.on('click', function(){
+          element.parent().children().removeClass('list_active');
+          element.addClass('list_active');
+        })
+      }
+    }
+  }]);
 }(angular));
 
 /** Service Layer **/
