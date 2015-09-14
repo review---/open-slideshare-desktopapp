@@ -10,6 +10,8 @@
   "author": "Ryutaro YOSHIBA",
   "license": "MIT License",
   "devDependencies": {
+     "electron-packager":"*",
+     "electron-prebuilt":"*",
      "grunt": "~0.4.5",
      "grunt-contrib-watch": "~0.6.1",
      "grunt-contrib-cssmin": "~0.10.0",

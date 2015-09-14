@@ -3,10 +3,10 @@ module.exports = function(grunt){
         clean: ["OpenSlideshare-darwin-x64", "OpenSlideshare-win32-x64", "OpenSlideshare.dmg"],
         shell: {
             build_mac: {
-                command: 'electron-packager . OpenSlideshare --platform=darwin --arch=x64 --version=0.30.0 --icon=OpenSlideshare.icns --overwrite'
+                command: './node_modules/.bin/electron-packager . OpenSlideshare --platform=darwin --arch=x64 --version=0.30.0 --icon=OpenSlideshare.icns --overwrite'
             },
             build: {
-                command: 'electron-packager . OpenSlideshare --platform=darwin,win32 --arch=x64 --version=0.30.0 --icon=OpenSlideshare.icns --overwrite'
+                command: './node_modules/.bin/electron-packager . OpenSlideshare --platform=darwin,win32 --arch=x64 --version=0.30.0 --icon=OpenSlideshare.icns --overwrite'
             },
             mac: {
                 command: 'hdiutil create -ov -srcfolder ./OpenSlideshare-darwin-x64 -fs HFS+ -format UDZO -imagekey zlib-level=9 -volname "OpenSlideshare" OpenSlideshare.dmg'
