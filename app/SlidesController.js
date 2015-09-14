@@ -1,9 +1,10 @@
 var request = require("request")
 var logger = require('./app/logger');
 
-var slides_url = "http://slide.meguro.ryuzee.com/api/v1/slides";
-var slide_url = "http://slide.meguro.ryuzee.com/api/v1/slide";
-var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
+var base_url = "http://slide.meguro.ryuzee.com";
+var slides_url = base_url + "/api/v1/slides";
+var slide_url = base_url + "/api/v1/slide";
+var iframe_url = base_url + "/slides/iframe";
 
 (function (ng) {
   'use strict';
@@ -44,9 +45,10 @@ var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
 }(angular));
 
 /** Service Layer **/
-angular.module('myServices', [])
+angular.module('OSSServices', [])
   .service('oss', ['$http', function ($http) {
 
+    /** Common function to retrieve data from specific url **/
     this.get_data = function(url, callback) {
       $http({
         url: url,
@@ -56,7 +58,13 @@ angular.module('myServices', [])
         callback(data);
       })
       .error(function (data, status, headers, config) {
-        alert(status + ' ' + data.message);
+        var e = "Error occured...";
+        if(status == "0") {
+          e = "Failed to retrieve data...";
+        } else if(status == "404") {
+          e = "404 Not Found...";
+        }
+        alert(e);
       });
     };
 
@@ -91,7 +99,7 @@ angular.module('myServices', [])
   }]);
 
 /** Main **/
-angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
+angular.module('OSS', ['OSSServices', 'ngSanitize', 'ngLoadScript'])
 .controller('SlidesController',
   ['$scope', 'oss', '$sce', '$timeout', function($scope, oss, $sce, $timeout) {
     oss.get_slides(function (res) {
@@ -125,17 +133,20 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
         $scope.slide_transcript = "./templates/slide_transcript.html";
       });
     };
+
     $scope.listSlidesByTag = function(tag, $event) {
       oss.get_slides_by_tag(tag, function(res) {
         logger.request.debug(res);
         $scope.slides = res;
       });
     };
+
     $scope.listAllSlides = function(tag, $event) {
       oss.get_slides(function(res) {
         $scope.slides = res;
       });
     };
+
     $scope.onSearchTextChange = function($event) {
       var t = $scope.search_text;
       oss.get_slides_by_keyword(t, function(res) {
