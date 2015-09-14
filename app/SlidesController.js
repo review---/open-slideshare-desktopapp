@@ -4,7 +4,6 @@ var logger = require('./app/logger');
 var slides_url = "http://slide.meguro.ryuzee.com/api/v1/slides";
 var slide_url = "http://slide.meguro.ryuzee.com/api/v1/slide";
 var iframe_url = "http://slide.meguro.ryuzee.com/slides/iframe";
-var tag_search_url = "http://slide.meguro.ryuzee.com/api/v1/slides/tags:";
 
 (function (ng) {
   'use strict';
@@ -65,7 +64,7 @@ angular.module('myServices', [])
     /** Retrieve Slides json by tag **/
     this.get_slides_by_tag = function (tag, callback) {
       $http({
-        url: tag_search_url + tag,
+        url: slides_url + "/tag:" + tag,
         method: 'GET'
       })
       .success(function (data, status, headers, config) {
@@ -75,6 +74,20 @@ angular.module('myServices', [])
         alert(status + ' ' + data.message);
       });
     };
+
+    this.get_slides_by_keyword = function (keyword, callback) {
+      $http({
+        url: slides_url + "/name:" + keyword,
+        method: 'GET'
+      })
+      .success(function (data, status, headers, config) {
+        callback(data);
+      })
+      .error(function (data, status, headers, config) {
+        alert(status + ' ' + data.message);
+      });
+    };
+
 
     /** Retrieve specific slide **/
     this.get_slide = function (id, callback) {
@@ -151,6 +164,12 @@ angular.module('OSS', ['myServices', 'ngSanitize', 'ngLoadScript'])
     };
     $scope.listAllSlides = function(tag, $event) {
       oss.get_slides(function(res) {
+        $scope.slides = res;
+      });
+    };
+    $scope.onSearchTextChange = function($event) {
+      var t = $scope.search_text;
+      oss.get_slides_by_keyword(t, function(res) {
         $scope.slides = res;
       });
     };
