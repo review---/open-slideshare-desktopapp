@@ -41,11 +41,11 @@ app.on('ready', function() {
   // Show tip when mouseover
   appIcon.setToolTip('OpenSlideshare / No Sushi, No Life');
 
-  openWindow();
+  processWindow();
 
 });
 
-function openWindow() {
+function processWindow() {
   var lastWindowState = storage.get("lastWindowState");
   if (lastWindowState === null) {
     lastWindowState = {
