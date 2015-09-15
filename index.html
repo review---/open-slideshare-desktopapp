@@ -64,11 +64,17 @@
 <script type="text/javascript">
 Mousetrap.bind(['j'], function(e) {
   var cur = $('ul.left_navi_list li.list_active'),
-      next = cur.next('li'),
-      prev = cur.prev('li');
+      next = cur.next('li');
   cur.removeClass('list_active');
   next.addClass('list_active');
   next.children('a').click();
+});
+Mousetrap.bind(['k'], function(e) {
+  var cur = $('ul.left_navi_list li.list_active'),
+      prev = cur.prev('li');
+  cur.removeClass('list_active');
+  prev.addClass('list_active');
+  prev.children('a').click();
 });
 </script>
 </body>
